@@ -256,20 +256,21 @@ Finally, **always use exact numbers for dependency versions**. This means that i
 
 ### Running unit tests
 
-Unit tests are executed when you type `rush test`. If you want to run the unit tests for a specific package, you should move to the corresponding package folder and run `rushx test` there.
+Unit tests are executed when you type `rush test`. If you want to run the unit tests for a specific package, you should move to the corresponding folder and run one of the following commands:
+
+- `rushx test:cli -v`: Run unit tests for the cli package.
+- `rushx test:core -v`: Run unit tests for the `framework-core` package.
+- `rushx test:provider-aws -v`: Run unit tests for the `framework-provider-aws` package.
+- `rushx test:provider-aws-infrastructure -v`: Run unit tests for the `framework-provider-aws-infrastructure` package.
+- `rushx test:provider-azure -v`: Run unit tests for the `framework-provider-azure` package.
+- `rushx test:provider-azure-infrastructure -v`: Run unit tests for the `framework-provider-azure-infrastructure` package.
+- `rushx test:provider-local -v`: Run unit tests for the `framework-provider-local` package.
+- `rushx test:provider-local-infrastructure -v`: Run unit tests for the `framework-provider-local-infrastructure` package.
+- `rushx test:types -v`: Run unit tests for the `framework-types` package.
 
 ### Running integration tests
 
-Integration tests are triggered by repo admins to be run in Github Actions by commenting
-
-```text
-/integration sha=1234ab
-```
-
-Where `1234ab` is the SHA of the latest commit.
-
-
-Still, it is recommendable to run them locally before submitting a PR for review. You can find several scripts in `packages/framework-integration-tests/package.json` to run different test suites. You can run them using rush tool:
+Integration tests are run automatically in Github Actions when a PR is locked, but it would be recommendable to run them locally before submitting a PR for review. You can find several scripts in `packages/framework-integration-tests/package.json` to run different test suites. You can run them using rush tool:
 
 `rushx <script name> -v`
 
@@ -291,13 +292,13 @@ The preferred way of accepting contributions is following the [Github flow](http
 
 ### Publishing your Pull Request
 
-Make sure that you describe your change thoroughly in the PR body, adding references for any related issues and links to any resource that helps clarifying the intent and goals of the change.
+Make sure that you describe your change thoroughly in the PR body, adding references for any related issues and links to any resource that helps clarify the intent and goals of the change.
 
 When you submit a PR to the Booster repository:
 
 - _Unit tests_ will be automatically run. PRs with non-passing tests can't be merged.
-- If tests pass, your code will be reviewed by at least two people from the core team. Clarifications or improvements might be asked, and they reserve the right to close any PR that do not meet the project quality standards, goals or philosophy, so it's always a good idea to discuss your plans in an issue or the Spectrum channel before committing to significant changes.
-- Code must be mergeable and all conflicts solved before merging it.
+- If tests pass, your code will be reviewed by at least two people from the core team. Clarifications or improvements might be asked, and they reserve the right to close any PR that do not meet the project quality standards, goals or philosophy. So, discussing your plans in an issue or the Spectrum channel is always a good idea before committing to significant changes.
+- Code must be mergeable, and all conflicts must be solved before merging.
 - Once the review process is done, unit tests pass and conflicts are fixed, you still need to make the _Integration tests check_ to pass. In order to do that, you need to comment `/integration sha=1234ab` (where `1234ab` is the latest commit's SHA) in the pull request. The _integration tests_ will run. If everything went well, the bot will comment with a success, and your PR can be merged now.
 
 Once the PR is merged, the CICD process will publish the latest changes to NPM. When this finishes, as a maintainer, make sure to create a new GitHub release in the [releases page](https://github.com/boostercloud/booster/releases):
